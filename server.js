@@ -92,30 +92,24 @@ var Todo = mongoose.model('Todo', {
     app.get('/todo/update', function(req, res){
         console.log('query: %j',  req.query);
 
-        Todo.findById(req.query['id'], function(err, todo) {
+        Todo.findByIdAndUpdate(req.query.id, {
+            "completed": (req.query.completed === 'true')
+        }, function(err, todo) {
             if (err) {
                 res.send(err);
             }
 
-            todo.completed = (req.query['completed'] === 'true');
+            console.log('todo set at: %j', todo);
 
-            todo.save(function (err) {
+
+            Todo.find(function(err, todo) {
                 if (err) {
                     res.send(err);
                 }
 
-                console.log('todo set at: %j', todo);
+                console.log('found: ' + todo);
 
-
-                Todo.find(function(err, todo) {
-                    if (err) {
-                        res.send(err);
-                    }
-
-                    console.log('found: ' + todo);
-
-                    res.json(todo);
-                });
+                res.json(todo);
             });
 
         });

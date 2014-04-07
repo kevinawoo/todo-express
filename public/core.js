@@ -21,7 +21,8 @@ function TodoController($scope, $http) {
     // read
     $http.get('/todo/read')
         .success(function(data) {
-            console.log('got data: ' + data.text + ': ' + data);
+            console.log('read');
+            console.log(data);
             $scope.todos = data;
         })
         .error(function (){
@@ -30,8 +31,21 @@ function TodoController($scope, $http) {
 
 
     // update
-    $scope.completeTodo = function(index) {
-        console.log($scope.todos[index]);
+    $scope.completeTodo = function(id) {
+        var index = 0;
+        $scope.todos.forEach(function (element, i, array) {
+            if (element._id === id) {
+                index = i;
+                return false;
+            }
+        });
+                console.log(index);
+
+
+
+
+        console.log('update: ' + index);
+        console.log($scope.todos);
         $http({
             url: '/todo/update',
             method: 'GET',

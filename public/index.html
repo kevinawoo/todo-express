@@ -42,9 +42,9 @@
     <div id="todo-list" class="row">
         <div class="col-sm-4 col-sm-offset-4">
             <form>
-                <div class="checkbox" ng-repeat="todo in todos">
+                <div class="checkbox" ng-repeat="todo in todos | orderBy: 'text'">
                     <label>
-                        <input type="checkbox" ng-model="todo.completed" ng-click="completeTodo($index)"> {{ todo.text }} <i class="fa fa-trash-o" ng-click="deleteTodo(todo._id)"></i>
+                        <input type="checkbox" ng-model="todo.completed" ng-click="completeTodo(todo._id)"> {{ todo.text }} <i class="fa fa-trash-o" ng-click="deleteTodo(todo._id)"></i>
                     </label>
                 </div>
             </form>
