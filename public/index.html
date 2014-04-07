@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Todo List</title>
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com//bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link href="//netdna.bootstrapcdn.com//bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <style>
         html {
@@ -40,11 +41,13 @@
     <!--TODOs list-->
     <div id="todo-list" class="row">
         <div class="col-sm-4 col-sm-offset-4">
-            <div class="checkbox" ng-repeat="todo in todos">
-                <label>
-                    <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-                </label>
-            </div>
+            <form>
+                <div class="checkbox" ng-repeat="todo in todos">
+                    <label>
+                        <input type="checkbox" ng-model="todo.completed" ng-click="completeTodo($index)"> {{ todo.text }} <i class="fa fa-trash-o" ng-click="deleteTodo(todo._id)"></i>
+                    </label>
+                </div>
+            </form>
         </div>
     </div>
 

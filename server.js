@@ -22,12 +22,25 @@ app.configure(function() {
 
 
 
+
+// models
+var Todo = mongoose.model('Todo', {
+    text: String,
+    date: Date,
+    completed: Boolean
+});
+
+
+
+
+
 // routes
 
     // application
     app.get('/', function (req, res) {
         res.sendfile('./public/index.html');
     });
+
 
 
     // create
@@ -43,7 +56,7 @@ app.configure(function() {
                 res.send(err);
             }
 
-            
+
             Todo.find(function(err, todo) {
                 if (err) {
                     res.send(err);
@@ -55,6 +68,7 @@ app.configure(function() {
         });
 
     });
+
 
     // read
     app.get('/todo/read', function(req, res) {
@@ -73,15 +87,40 @@ app.configure(function() {
 
     });
 
+
     // update
-    app.post('/todo/update', function(req, res){
+    app.get('/todo/update', function(req, res){
+        console.log('query: %j',  req.query);
 
-        throw notImplemented();
+        Todo.findById(req.query['id'], function(err, todo) {
+            if (err) {
+                res.send(err);
+            }
 
-        //noinspection UnreachableCodeJS
-        Todo.update();
+            todo.completed = (req.query['completed'] === 'true');
 
+            todo.save(function (err) {
+                if (err) {
+                    res.send(err);
+                }
+
+                console.log('todo set at: %j', todo);
+
+
+                Todo.find(function(err, todo) {
+                    if (err) {
+                        res.send(err);
+                    }
+
+                    console.log('found: ' + todo);
+
+                    res.json(todo);
+                });
+            });
+
+        });
     });
+
 
     // delete
     app.delete('/todo/delete/:todo_id', function(req, res){
@@ -106,19 +145,6 @@ app.configure(function() {
         });
 
     });
-
-
-
-
-
-
-// models
-var Todo = mongoose.model('Todo', {
-    text: String,
-    date: Date
-});
-
-
 
 
 
