@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 
 
 // configuration
-mongoose.connect('mongodb://127.0.0.1/todo');
+mongoose.connect('mongodb://todo-express:expressIsFUN@dbh26.mongolab.com:27267/todo');
 
 app.configure(function() {
     app.use(express.static(__dirname + '/public'));
